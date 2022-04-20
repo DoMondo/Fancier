@@ -1,4 +1,5 @@
 ﻿# Fancier High-Performance API
+[![Release](https://jitpack.io/v/DoMondo/Fancier.svg)](https://jitpack.io/#DoMondo/Fancier)
 
 ## Introduction
 
@@ -129,6 +130,29 @@ The "_test_" directory includes test applications showing the intended usage and
 the _Fancier_ API. The `copy_libs.sh` script copies the already-compiled `.jar` and `.so` files from
 their build directories into the paths where these test applications expect them to be placed in
 order to be able to link and run their code.
+
+## Publishing the android module
+See [fancier-android-module/PUBLISHING.md](fancier-android-module/PUBLISHING.md)
+
+## Using the Android module
+
+### Step 1
+Add it in your root build.gradle at the end of repositories:
+```groovy
+allprojects {
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
+	}
+}
+```
+### Step 2
+Add the dependency.
+```
+dependencies {
+        implementation 'com.github.DoMondo:Fancier:Tag'
+}
+```
 
 ## License
 

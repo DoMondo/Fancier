@@ -1,0 +1,4 @@
+rootProject.name = "fancier-android-module"
+include ':fancier'
+if (!System.env.JITPACK)
+    include ':app'
