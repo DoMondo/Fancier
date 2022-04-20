@@ -58,6 +58,15 @@ void fcArray_releaseJNI(JNIEnv* env) {
 % endfor
 }
 
+int release_ocl(cl_mem ocl) {
+   void * host_ptr;
+   clGetMemObjectInfo(ocl, CL_MEM_HOST_PTR,sizeof(void*), &host_ptr, NULL);
+   if (host_ptr != NULL) 
+      return 0;
+    int err = clReleaseMemObject(ocl);
+    return err;
+}
+
 ## TODO Suport non-unified memory architectures [fcOpenCL_info.unifiedMemory]
 
 % for type in types:
@@ -127,6 +136,20 @@ Java_es_ull_pcg_hpc_fancier_array_${type|c}Array_initNative__Les_ull_pcg_hpc_fan
 
   jint err = fc${type|c}Array_initCopy(self, __tmp_array);
   FC_EXCEPTION_HANDLE_ERROR(env, err, "fc${type|c}Array_initCopy", FC_VOID_EXPR);
+}
+
+JNIEXPORT void JNICALL
+Java_es_ull_pcg_hpc_fancier_array_${type|c}Array_initNative__Ljava_nio_${type|c}Buffer_2(JNIEnv* env, jobject obj, jobject buffer) {
+  void *buff = (*env)->GetDirectBufferAddress(env, buffer);
+  jlong size = (*env)->GetDirectBufferCapacity(env, buffer);
+
+  // Allocate instance
+  fc${type|c}Array* self = fc${type|c}Array_allocJava(env, obj);
+  FC_EXCEPTION_HANDLE_NULL(env, self, FC_EXCEPTION_INVALID_THIS, "fc${type|c}Array_allocJava", FC_VOID_EXPR);
+
+  // Store the pointer to array
+  jint err = fc${type|c}Array_initPtr(self, buff, size);
+  FC_EXCEPTION_HANDLE_ERROR(env, err, "fc${type|c}Array_initPtr", FC_VOID_EXPR);
 }
 
 JNIEXPORT void JNICALL
@@ -365,7 +388,41 @@ fcError fc${type|c}Array_initArray(fc${type|c}Array* self, fcInt len, const fc${
 
   if (err) {
     self->location = FC_ARRAY_LOCATION_NONE;
-    clReleaseMemObject(self->ocl);
+    release_ocl(self->ocl);
+    self->ocl = NULL;
+    return err;
+  }
+
+  return FC_EXCEPTION_SUCCESS;
+}
+
+fcError fc${type|c}Array_initPtr(fc${type|c}Array* self, void * ptr, fcInt len) {
+  fcError err;
+
+  // Check parameters
+  if (len <= 0)
+    return FC_EXCEPTION_ARRAY_BAD_LENGTH;
+
+  if (ptr == NULL)
+    return FC_EXCEPTION_BAD_PARAMETER;
+
+  err = fc${type|c}Array_init(self);
+  if (err) return err;
+
+  // Initialize length
+  self->len = len;
+
+  // Allocate array
+  self->ocl = clCreateBuffer(fcOpenCL_rt.context, CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR, self->len * sizeof(fc${type|c}), ptr, &err);
+  if (err) return err;
+
+  // Initialize array
+  self->location = FC_ARRAY_LOCATION_OPENCL;
+  self->c = ptr;
+
+  if (err) {
+    self->location = FC_ARRAY_LOCATION_NONE;
+    release_ocl(self->ocl);
     self->ocl = NULL;
     return err;
   }
@@ -395,7 +452,7 @@ fcError fc${type|c}Array_initCopy(fc${type|c}Array* self, const fc${type|c}Array
   err = fc${type|c}Array_setCopy(self, array);
   if (err) {
     self->location = FC_ARRAY_LOCATION_NONE;
-    clReleaseMemObject(self->ocl);
+    release_ocl(self->ocl);
     self->ocl = NULL;
   }
 
@@ -426,7 +483,7 @@ fcError fc${type|c}Array_release(fc${type|c}Array* self) {
     }
 
     if (self->ocl != NULL) {
-      err = clReleaseMemObject(self->ocl);
+      err = release_ocl(self->ocl);
 
       self->ocl = NULL;
       if (err) {

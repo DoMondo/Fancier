@@ -200,6 +200,7 @@ FANCIER_API fcError fcByteArray_init(fcByteArray* self);
 FANCIER_API fcError fcByteArray_initSize(fcByteArray* self, fcInt n);
 FANCIER_API fcError fcByteArray_initArray(fcByteArray* self, fcInt len, const fcByte* v);
 FANCIER_API fcError fcByteArray_initCopy(fcByteArray* self, const fcByteArray* array);
+FANCIER_API fcError fcByteArray_initPtr(fcByteArray* self, void * ptr, fcInt len);
 FANCIER_API fcError fcByteArray_release(fcByteArray* self);
 
 FANCIER_API fcByte fcByteArray_get(fcByteArray* self, fcInt i, fcError* err);
@@ -221,6 +222,7 @@ FANCIER_API fcError fcShortArray_init(fcShortArray* self);
 FANCIER_API fcError fcShortArray_initSize(fcShortArray* self, fcInt n);
 FANCIER_API fcError fcShortArray_initArray(fcShortArray* self, fcInt len, const fcShort* v);
 FANCIER_API fcError fcShortArray_initCopy(fcShortArray* self, const fcShortArray* array);
+FANCIER_API fcError fcShortArray_initPtr(fcShortArray* self, void * ptr, fcInt len);
 FANCIER_API fcError fcShortArray_release(fcShortArray* self);
 
 FANCIER_API fcShort fcShortArray_get(fcShortArray* self, fcInt i, fcError* err);
@@ -242,6 +244,7 @@ FANCIER_API fcError fcIntArray_init(fcIntArray* self);
 FANCIER_API fcError fcIntArray_initSize(fcIntArray* self, fcInt n);
 FANCIER_API fcError fcIntArray_initArray(fcIntArray* self, fcInt len, const fcInt* v);
 FANCIER_API fcError fcIntArray_initCopy(fcIntArray* self, const fcIntArray* array);
+FANCIER_API fcError fcIntArray_initPtr(fcIntArray* self, void * ptr, fcInt len);
 FANCIER_API fcError fcIntArray_release(fcIntArray* self);
 
 FANCIER_API fcInt fcIntArray_get(fcIntArray* self, fcInt i, fcError* err);
@@ -263,6 +266,7 @@ FANCIER_API fcError fcLongArray_init(fcLongArray* self);
 FANCIER_API fcError fcLongArray_initSize(fcLongArray* self, fcInt n);
 FANCIER_API fcError fcLongArray_initArray(fcLongArray* self, fcInt len, const fcLong* v);
 FANCIER_API fcError fcLongArray_initCopy(fcLongArray* self, const fcLongArray* array);
+FANCIER_API fcError fcLongArray_initPtr(fcLongArray* self, void * ptr, fcInt len);
 FANCIER_API fcError fcLongArray_release(fcLongArray* self);
 
 FANCIER_API fcLong fcLongArray_get(fcLongArray* self, fcInt i, fcError* err);
@@ -284,6 +288,7 @@ FANCIER_API fcError fcFloatArray_init(fcFloatArray* self);
 FANCIER_API fcError fcFloatArray_initSize(fcFloatArray* self, fcInt n);
 FANCIER_API fcError fcFloatArray_initArray(fcFloatArray* self, fcInt len, const fcFloat* v);
 FANCIER_API fcError fcFloatArray_initCopy(fcFloatArray* self, const fcFloatArray* array);
+FANCIER_API fcError fcFloatArray_initPtr(fcFloatArray* self, void * ptr, fcInt len);
 FANCIER_API fcError fcFloatArray_release(fcFloatArray* self);
 
 FANCIER_API fcFloat fcFloatArray_get(fcFloatArray* self, fcInt i, fcError* err);
@@ -305,6 +310,7 @@ FANCIER_API fcError fcDoubleArray_init(fcDoubleArray* self);
 FANCIER_API fcError fcDoubleArray_initSize(fcDoubleArray* self, fcInt n);
 FANCIER_API fcError fcDoubleArray_initArray(fcDoubleArray* self, fcInt len, const fcDouble* v);
 FANCIER_API fcError fcDoubleArray_initCopy(fcDoubleArray* self, const fcDoubleArray* array);
+FANCIER_API fcError fcDoubleArray_initPtr(fcDoubleArray* self, void * ptr, fcInt len);
 FANCIER_API fcError fcDoubleArray_release(fcDoubleArray* self);
 
 FANCIER_API fcDouble fcDoubleArray_get(fcDoubleArray* self, fcInt i, fcError* err);

@@ -20,6 +20,7 @@ package es.ull.pcg.hpc.fancier.array;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.nio.${type|c}Buffer;
 
 public class ${type|c}Array implements AutoCloseable {
   private long nativeInstancePtr = 0L;
@@ -38,6 +39,10 @@ public class ${type|c}Array implements AutoCloseable {
 
   public ${type|c}Array(${type|c}Array array) {
     initNative(array);
+  }
+
+  public ${type|c}Array(${type|c}Buffer buffer) {
+    initNative(buffer);
   }
 
   /**
@@ -84,6 +89,7 @@ public class ${type|c}Array implements AutoCloseable {
   private native void initNative(int n);
   private native void initNative(${type|l}[] v);
   private native void initNative(${type|c}Array array);
+  private native void initNative(${type|c}Buffer buffer);
   private native void releaseNative();
   private native void releaseNativeRef();
 

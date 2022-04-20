@@ -27,6 +27,7 @@ package es.ull.pcg.hpc.fancier.array;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.nio.LongBuffer;
 
 public class LongArray implements AutoCloseable {
   private long nativeInstancePtr = 0L;
@@ -45,6 +46,10 @@ public class LongArray implements AutoCloseable {
 
   public LongArray(LongArray array) {
     initNative(array);
+  }
+
+  public LongArray(LongBuffer buffer) {
+    initNative(buffer);
   }
 
   /**
@@ -86,6 +91,7 @@ public class LongArray implements AutoCloseable {
   private native void initNative(int n);
   private native void initNative(long[] v);
   private native void initNative(LongArray array);
+  private native void initNative(LongBuffer buffer);
   private native void releaseNative();
   private native void releaseNativeRef();
 

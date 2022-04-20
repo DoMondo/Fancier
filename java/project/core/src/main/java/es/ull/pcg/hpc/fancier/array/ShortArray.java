@@ -27,6 +27,7 @@ package es.ull.pcg.hpc.fancier.array;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.nio.ShortBuffer;
 
 public class ShortArray implements AutoCloseable {
   private long nativeInstancePtr = 0L;
@@ -45,6 +46,10 @@ public class ShortArray implements AutoCloseable {
 
   public ShortArray(ShortArray array) {
     initNative(array);
+  }
+
+  public ShortArray(ShortBuffer buffer) {
+    initNative(buffer);
   }
 
   /**
@@ -86,6 +91,7 @@ public class ShortArray implements AutoCloseable {
   private native void initNative(int n);
   private native void initNative(short[] v);
   private native void initNative(ShortArray array);
+  private native void initNative(ShortBuffer buffer);
   private native void releaseNative();
   private native void releaseNativeRef();
 

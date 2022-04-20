@@ -27,6 +27,7 @@ package es.ull.pcg.hpc.fancier.array;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
 
 public class FloatArray implements AutoCloseable {
   private long nativeInstancePtr = 0L;
@@ -45,6 +46,10 @@ public class FloatArray implements AutoCloseable {
 
   public FloatArray(FloatArray array) {
     initNative(array);
+  }
+
+  public FloatArray(FloatBuffer buffer) {
+    initNative(buffer);
   }
 
   /**
@@ -86,6 +91,7 @@ public class FloatArray implements AutoCloseable {
   private native void initNative(int n);
   private native void initNative(float[] v);
   private native void initNative(FloatArray array);
+  private native void initNative(FloatBuffer buffer);
   private native void releaseNative();
   private native void releaseNativeRef();
 

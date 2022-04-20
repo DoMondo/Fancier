@@ -78,6 +78,7 @@ FANCIER_API fcError fc${type|c}Array_init(fc${type|c}Array* self);
 FANCIER_API fcError fc${type|c}Array_initSize(fc${type|c}Array* self, fcInt n);
 FANCIER_API fcError fc${type|c}Array_initArray(fc${type|c}Array* self, fcInt len, const fc${type|c}* v);
 FANCIER_API fcError fc${type|c}Array_initCopy(fc${type|c}Array* self, const fc${type|c}Array* array);
+FANCIER_API fcError fc${type|c}Array_initPtr(fc${type|c}Array* self, void * ptr, fcInt len);
 FANCIER_API fcError fc${type|c}Array_release(fc${type|c}Array* self);
 
 FANCIER_API fc${type|c} fc${type|c}Array_get(fc${type|c}Array* self, fcInt i, fcError* err);
