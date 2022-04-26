@@ -60,11 +60,8 @@ void fcArray_releaseJNI(JNIEnv* env) {
 
 int release_ocl(cl_mem ocl) {
    void * host_ptr;
-   clGetMemObjectInfo(ocl, CL_MEM_HOST_PTR,sizeof(void*), &host_ptr, NULL);
-   if (host_ptr != NULL) 
-      return 0;
-    int err = clReleaseMemObject(ocl);
-    return err;
+   int err = clReleaseMemObject(ocl);
+   return err;
 }
 
 ## TODO Suport non-unified memory architectures [fcOpenCL_info.unifiedMemory]

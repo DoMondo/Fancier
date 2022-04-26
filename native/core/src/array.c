@@ -101,11 +101,12 @@ void fcArray_releaseJNI(JNIEnv* env) {
 
 int release_ocl(cl_mem ocl) {
    void * host_ptr;
-   clGetMemObjectInfo(ocl, CL_MEM_HOST_PTR,sizeof(void*), &host_ptr, NULL);
-   if (host_ptr != NULL)
-      return 0;
-    int err = clReleaseMemObject(ocl);
-    return err;
+   //clGetMemObjectInfo(ocl, CL_MEM_HOST_PTR, sizeof(void*), &host_ptr, NULL);
+   //if (host_ptr != NULL)  {
+   //   return clEnqueueUnmapMemObject(fcOpenCL_rt.queue, ocl, host_ptr, 0, NULL, NULL);
+   //}
+   int err = clReleaseMemObject(ocl);
+   return err;
 }
 
 
